@@ -1,0 +1,63 @@
+-- Routing --
+
+1. Tree - a convention for visualizing a hierarchical structure. For example, project structure; 
+2. Subtree - a part of a tree. Starting with a root, ending with leaves. For example, the parent folder with child folders
+3. Root - the first node of a subtree;
+4. Leaves - last nodes of a subtree;  
+
+5 - 'page.tsx' is always the leaf a route subtree
+
+
+-- Components --
+
+1. Nested segments. For example, in case of the following subtree: 'dashboard/settings', 'settings' content is inside its parent (rendering). So, the code would be like the following: 
+
+<Dashboard_Div>
+   <Settings_Div>
+   </Settings_Div>
+<Dashboard_Div>
+
+2. In the following code structure: 
+
+/app
+|
+|___ layout.tsx
+|
+|___ /dashboard
+    |
+    |
+    |____ page.tsx
+    |
+    |
+    |____ /about
+         |
+         |
+         |____ page.tsx
+
+
+ - The content will be rendered like: 
+
+<Layout>    - /app/layout.tsx
+   <Dashboard_Div>      - /app/dashboard/page.tsx
+      <About_Div>       - /app/dashboard/about/page.tsx
+
+      </About_Div>
+   </Dashboard_Div>
+</Layout>
+
+
+3. Pages by default are 'Server Components' but can be set to 'Client Components' with 'use client' directive
+
+4. iside 'layout.tsx' the component should have the following structure: 
+
+export function Layout({children}: {children: React.ReactNode}) {
+   return (
+      <div>
+         {children}
+      </div>
+   )
+}
+
+passing the 'children' as a prop will signal that the specified layout should be shared within all of the nested segments
+
+('React.ReactNode' is basically a type that stands for 'any valid react node that can be rendered'. So, 'children' can basically be anything (string, number, UI piece, html element etc.) as long as it can be rendered)
